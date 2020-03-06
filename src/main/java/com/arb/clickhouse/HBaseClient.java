@@ -24,7 +24,7 @@ public class HBaseClient {
     public HBaseClient() {
         config = HBaseConfiguration.create();
         config.clear();
-        config.set("hbase.zookeeper.quorum", "localhost");
+        config.set("hbase.zookeeper.quorum", "192.168.1.225");
         config.set("hbase.zookeeper.property.clientPort", "2181");
         config.set("hbase.master.port", "16000");
         config.set("hbase.master.info.port", "16010");
@@ -38,6 +38,8 @@ public class HBaseClient {
             connection = ConnectionFactory.createConnection(config);
             Admin admin = connection.getAdmin();
             TableName tableName = TableName.valueOf(TABLE_NAME);
+            admin.disableTable(tableName);
+            admin.deleteTable(tableName);
             if(!admin.tableExists(tableName)) {
                 log.info("Table creation...");
                 TableDescriptor htable = TableDescriptorBuilder.newBuilder(tableName)
@@ -123,6 +125,7 @@ public class HBaseClient {
     }
 
     public void insertManyRows(int count) {
+        count = 100000;
         try {
             connection = ConnectionFactory.createConnection(config);
             Admin admin = connection.getAdmin();
