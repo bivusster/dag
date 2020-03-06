@@ -18,7 +18,7 @@ public class App {
         ClickHouseClient cClient = new ClickHouseClient();
         cClient.runAllTest();
 
-        HBaseClient hClient = new HBaseClient();
-        hClient.runAllTest();
+        //HBaseClient hClient = new HBaseClient();
+        //hClient.runAllTest();
     }
 }

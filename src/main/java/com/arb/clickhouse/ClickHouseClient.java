@@ -142,11 +142,33 @@ public class ClickHouseClient {
         }
     }
 
+    public void readCountRows() {
+        PreparedStatement statement = null;
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.prepareStatement("SELECT COUNT(*) as rowcount FROM " + TABLE_NAME);
+
+            long start = System.currentTimeMillis();
+            ResultSet rs = statement.executeQuery();
+            long end = System.currentTimeMillis();
+
+            rs.next();
+            long count = rs.getLong("rowcount");
+
+            connection.close();
+
+            log.info("Count has been read. Count - " + count + ". Time - " + (end - start) + " ms.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void runAllTest() {
         createTable();
         insertOneRow();
         readOneRow(false);
         insertManyRows(60000);
         readManyRows();
+        readCountRows();
     }
 }

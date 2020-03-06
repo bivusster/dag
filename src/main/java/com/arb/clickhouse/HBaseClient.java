@@ -24,12 +24,10 @@ public class HBaseClient {
     public HBaseClient() {
         config = HBaseConfiguration.create();
         config.clear();
-        config.set("hbase.zookeeper.quorum", "192.168.1.225");
+        config.set("hbase.zookeeper.quorum", "localhost");
         config.set("hbase.zookeeper.property.clientPort", "2181");
         config.set("hbase.master.port", "16000");
-        config.set("hbase.master.info.port", "16010");
         config.set("hbase.regionserver.port", "16020");
-        config.set("hbase.regionserver.info.port", "16010");
         config.set("hbase.localcluster.port.ephemeral", "false");
     }
 
